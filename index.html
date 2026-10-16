@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ChiliBurner ($CHILIBURNER) - The Spiciest Meme Coin on Solana</title>
+
+  <!-- Favicons for Browsers & Apple Devices -->
+  <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png">
+
+  <!-- Open Graph / Social Media Preview -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="ChiliBurner ($CHILIBURNER) - Too Hot to Hold">
+  <meta property="og:description" content="The spiciest meme coin on Solana. 100% pure heat and community hype.">
+  <meta property="og:image" content="https://chiligili.github.io/chiliburner/img/logo.png">
+
+  <style>
+    :root {
+      --bg-dark: #0a0a0f;
+      --card-bg: #14141d;
+      --primary-red: #ff2a00;
+      --primary-orange: #ff8800;
+      --text-main: #ffffff;
+      --text-muted: #a0a0b8;
+      --glow: rgba(255, 42, 0, 0.4);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Background glow effect */
+    .bg-glow {
+      position: fixed;
+      top: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, var(--glow) 0%, rgba(0,0,0,0) 70%);
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    header {
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-img {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      object-fit: cover;
+      box-shadow: 0 0 12px rgba(255, 42, 0, 0.5);
+    }
+
+    .logo-text {
+      background: linear-gradient(45deg, var(--primary-red), var(--primary-orange));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .btn-buy {
+      background: linear-gradient(45deg, var(--primary-red), var(--primary-orange));
+      color: white;
+      padding: 12px 28px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 700;
+      box-shadow: 0 4px 15px var(--glow);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .btn-buy:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255, 42, 0, 0.6);
+    }
+
+    /* Hero Section */
+    .hero {
+      text-align: center;
+      padding: 60px 20px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .hero-icon {
+      margin-bottom: 25px;
+      display: inline-block;
+    }
+
+    .hero-logo-img {
+      width: 180px;
+      height: 180px;
+      border-radius: 24px;
+      object-fit: cover;
+      box-shadow: 0 0 35px var(--glow);
+      animation: pulse 2s infinite alternate;
+      border: 2px solid rgba(255, 68, 0, 0.4);
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); box-shadow: 0 0 20px var(--primary-red); }
+      100% { transform: scale(1.05); box-shadow: 0 0 40px var(--primary-orange); }
+    }
+
+    .hero h1 {
+      font-size: 3.5rem;
+      margin-bottom: 20px;
+      line-height: 1.2;
+    }
+
+    .hero h1 span {
+      background: linear-gradient(45deg, var(--primary-red), var(--primary-orange));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      margin-bottom: 40px;
+    }
+
+    /* Contract Address Box */
+    .ca-container {
+      background: var(--card-bg);
+      border: 1px solid rgba(255, 42, 0, 0.2);
+      border-radius: 12px;
+      padding: 15px 25px;
+      display: inline-flex;
+      align-items: center;
+      gap: 15px;
+      max-width: 100%;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .ca-title {
+      font-size: 0.9rem;
+      color: var(--primary-orange);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .ca-address {
+      font-family: monospace;
+      font-size: 1rem;
+      color: #fff;
+      word-break: break-all;
+    }
+
+    .btn-copy {
+      background: #232330;
+      color: #fff;
+      border: 1px solid #333348;
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+
+    .btn-copy:hover {
+      background: var(--primary-red);
+    }
+
+    /* Sections Container */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 60px 20px;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 2.2rem;
+      margin-bottom: 40px;
+    }
+
+    /* Grid Layout for Cards */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 25px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      padding: 30px;
+      text-align: center;
+      transition: transform 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(255, 42, 0, 0.3);
+    }
+
+    .card-icon {
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+    }
+
+    .card h3 {
+      font-size: 1.4rem;
+      margin-bottom: 10px;
+      color: var(--primary-orange);
+    }
+
+    .card p {
+      color: var(--text-muted);
+    }
+
+    /* How to Buy Steps */
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .step-item {
+      background: var(--card-bg);
+      padding: 20px 30px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      border-left: 4px solid var(--primary-red);
+    }
+
+    .step-number {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--primary-orange);
+      min-width: 40px;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 40px 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    footer p {
+      margin-bottom: 10px;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2.5rem; }
+      header { flex-direction: column; gap: 15px; }
+      .step-item { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg-glow"></div>
+
+  <!-- Header -->
+  <header>
+    <div class="logo">
+      <img src="img/logo.png" alt="ChiliBurner Logo" class="logo-img">
+      <span class="logo-text">ChiliBurner</span>
+    </div>
+    <a href="https://pump.fun" target="_blank" class="btn-buy">Buy on pump.fun 🚀</a>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-icon">
+      <img src="img/logo.png" alt="ChiliBurner Mascot" class="hero-logo-img">
+    </div>
+    <h1>Too Hot to Hold. <span>$CHILIBURNER</span></h1>
+    <p>The spiciest meme coin on Solana. Powered by 100% pure heat and community hype. No taxes, no BS, just pure burn.</p>
+
+    <!-- Contract Address -->
+    <div class="ca-container">
+      <span class="ca-title">Contract Address (CA):</span>
+      <span class="ca-address" id="contractAddress">YOUR_SOLANA_CONTRACT_ADDRESS_HERE</span>
+      <button class="btn-copy" onclick="copyCA()">Copy</button>
+    </div>
+  </section>
+
+  <!-- Tokenomics Section -->
+  <section class="container">
+    <h2 class="section-title">🌶️ Spicy Tokenomics</h2>
+    <div class="grid">
+      <div class="card">
+        <div class="card-icon">🔥</div>
+        <h3>Liquidity Burned</h3>
+        <p>100% of initial LP tokens are burned forever. Rug-proof by default.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🚫</div>
+        <h3>0% Buy / Sell Tax</h3>
+        <p>Keep all your profits. Trade without paying extra fees on transactions.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">💎</div>
+        <h3>Fair Launch</h3>
+        <p>No team allocation or pre-sale. Everyone buys at the same level on pump.fun.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- How to Buy Section -->
+  <section class="container">
+    <h2 class="section-title">🚀 How to Buy $CHILIBURNER</h2>
+    <div class="steps">
+      <div class="step-item">
+        <div class="step-number">01</div>
+        <div>
+          <h3>Create Phantom Wallet</h3>
+          <p>Download Phantom extension for your browser or app for mobile.</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-number">02</div>
+        <div>
+          <h3>Get Some SOL</h3>
+          <p>Buy SOL directly in Phantom or transfer it from an exchange.</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-number">03</div>
+        <div>
+          <h3>Connect to pump.fun</h3>
+          <p>Go to pump.fun, connect your wallet and search for $CHILIBURNER.</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-number">04</div>
+        <div>
+          <h3>Swap SOL for $CHILIBURNER</h3>
+          <p>Set your amount, hit buy, and enjoy the spice!</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2026 ChiliBurner ($CHILIBURNER). All rights reserved.</p>
+    <p style="font-size: 0.8rem; opacity: 0.6;">Disclaimer: $CHILIBURNER is a meme coin created for entertainment purposes only with no intrinsic value or expectation of financial return.</p>
+  </footer>
+
+  <!-- Script for Copying Contract Address -->
+  <script>
+    function copyCA() {
+      const caText = document.getElementById("contractAddress").innerText;
+      if (caText === "YOUR_SOLANA_CONTRACT_ADDRESS_HERE") {
+        alert("Contract address not set yet! Paste your real CA here after launching on pump.fun.");
+        return;
+      }
+      navigator.clipboard.writeText(caText).then(() => {
+        const btn = document.querySelector(".btn-copy");
+        btn.innerText = "Copied! 🌶️";
+        setTimeout(() => { btn.innerText = "Copy"; }, 2000);
+      });
+    }
+  </script>
+
+</body>
+</html>
