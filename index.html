@@ -41,7 +41,6 @@
       overflow-x: hidden;
     }
 
-    /* Background glow effect */
     .bg-glow {
       position: fixed;
       top: -200px;
@@ -68,20 +67,13 @@
       font-weight: 800;
       display: flex;
       align-items: center;
-      gap: 12px;
-    }
-
-    .logo-img {
-      width: 42px;
-      height: 42px;
-      border-radius: 10px;
-      object-fit: cover;
-      box-shadow: 0 0 12px rgba(255, 42, 0, 0.5);
+      gap: 10px;
     }
 
     .logo-text {
       background: linear-gradient(45deg, var(--primary-red), var(--primary-orange));
       -webkit-background-clip: text;
+      background-clip: text;
       -webkit-text-fill-color: transparent;
     }
 
@@ -101,7 +93,6 @@
       box-shadow: 0 6px 20px rgba(255, 42, 0, 0.6);
     }
 
-    /* Hero Section */
     .hero {
       text-align: center;
       padding: 60px 20px;
@@ -138,6 +129,7 @@
     .hero h1 span {
       background: linear-gradient(45deg, var(--primary-red), var(--primary-orange));
       -webkit-background-clip: text;
+      background-clip: text;
       -webkit-text-fill-color: transparent;
     }
 
@@ -147,7 +139,6 @@
       margin-bottom: 40px;
     }
 
-    /* Contract Address Box */
     .ca-container {
       background: var(--card-bg);
       border: 1px solid rgba(255, 42, 0, 0.2);
@@ -192,7 +183,6 @@
       background: var(--primary-red);
     }
 
-    /* Sections Container */
     .container {
       max-width: 1100px;
       margin: 0 auto;
@@ -205,7 +195,6 @@
       margin-bottom: 40px;
     }
 
-    /* Grid Layout for Cards */
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -241,7 +230,118 @@
       color: var(--text-muted);
     }
 
-    /* How to Buy Steps */
+    /* Meme Generator Upgrade CSS */
+    .generator-box {
+      background: var(--card-bg);
+      border: 1px solid rgba(255, 42, 0, 0.2);
+      border-radius: 20px;
+      padding: 30px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      justify-content: center;
+      align-items: flex-start;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+    }
+
+    .canvas-container {
+      flex: 1;
+      min-width: 300px;
+      max-width: 450px;
+      text-align: center;
+    }
+
+    #memeCanvas {
+      width: 100%;
+      height: auto;
+      border-radius: 16px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.6);
+      background: #000;
+    }
+
+    .controls-container {
+      flex: 1;
+      min-width: 300px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .control-group label {
+      font-weight: 700;
+      color: var(--primary-orange);
+      font-size: 0.85rem;
+      text-transform: uppercase;
+    }
+
+    .control-group input[type="text"],
+    .control-group input[type="file"],
+    .control-group select {
+      background: #1c1c28;
+      border: 1px solid #333348;
+      color: #fff;
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      outline: none;
+    }
+
+    .btn-download {
+      background: linear-gradient(45deg, var(--primary-red), var(--primary-orange));
+      color: white;
+      padding: 14px;
+      border: none;
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 1.1rem;
+      cursor: pointer;
+      box-shadow: 0 4px 15px var(--glow);
+      transition: transform 0.2s;
+      margin-top: 10px;
+    }
+
+    .btn-download:hover {
+      transform: translateY(-2px);
+    }
+
+    .roadmap-badge {
+      display: inline-block;
+      background: rgba(255, 42, 0, 0.2);
+      color: var(--primary-orange);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      border: 1px solid rgba(255, 42, 0, 0.4);
+    }
+
+    .roadmap-list {
+      list-style: none;
+      text-align: left;
+      margin-top: 15px;
+      color: var(--text-muted);
+    }
+
+    .roadmap-list li {
+      margin-bottom: 10px;
+      padding-left: 20px;
+      position: relative;
+    }
+
+    .roadmap-list li::before {
+      content: "🌶️";
+      position: absolute;
+      left: 0;
+      font-size: 0.8rem;
+    }
+
     .steps {
       display: flex;
       flex-direction: column;
@@ -267,7 +367,6 @@
       min-width: 40px;
     }
 
-    /* Footer */
     footer {
       text-align: center;
       padding: 40px 20px;
@@ -280,7 +379,6 @@
       margin-bottom: 10px;
     }
 
-    /* Responsive adjustments */
     @media (max-width: 768px) {
       .hero h1 { font-size: 2.5rem; }
       header { flex-direction: column; gap: 15px; }
@@ -295,8 +393,7 @@
   <!-- Header -->
   <header>
     <div class="logo">
-      <img src="img/logo.png" alt="ChiliBurner Logo" class="logo-img">
-      <span class="logo-text">ChiliBurner</span>
+      🌶️ <span class="logo-text">ChiliBurner</span>
     </div>
     <a href="https://pump.fun" target="_blank" class="btn-buy">Buy on pump.fun 🚀</a>
   </header>
@@ -314,6 +411,45 @@
       <span class="ca-title">Contract Address (CA):</span>
       <span class="ca-address" id="contractAddress">YOUR_SOLANA_CONTRACT_ADDRESS_HERE</span>
       <button class="btn-copy" onclick="copyCA()">Copy</button>
+    </div>
+  </section>
+
+  <!-- Interactive Meme Generator Section -->
+  <section class="container">
+    <h2 class="section-title">🎨 Spicy Meme Studio</h2>
+    <div class="generator-box">
+      <div class="canvas-container">
+        <canvas id="memeCanvas" width="500" height="500"></canvas>
+      </div>
+      <div class="controls-container">
+        
+        <div class="control-group">
+          <label for="imageUpload">1. Upload Custom Image (Optional)</label>
+          <input type="file" id="imageUpload" accept="image/*">
+        </div>
+
+        <div class="control-group">
+          <label for="overlaySelect">2. Select Overlay / Sticker</label>
+          <select id="overlaySelect">
+            <option value="logo">Chili Mascot Logo</option>
+            <option value="flames">Fire & Flames</option>
+            <option value="glasses">Sunglasses</option>
+            <option value="none">None (Text Only)</option>
+          </select>
+        </div>
+
+        <div class="control-group">
+          <label for="topText">3. Top Text</label>
+          <input type="text" id="topText" placeholder="TOO HOT TO HOLD" value="TOO HOT TO HOLD">
+        </div>
+
+        <div class="control-group">
+          <label for="bottomText">4. Bottom Text</label>
+          <input type="text" id="bottomText" placeholder="BUY $CHILIBURNER" value="BUY $CHILIBURNER">
+        </div>
+
+        <button class="btn-download" onclick="downloadMeme()">Download Meme 🌶️</button>
+      </div>
     </div>
   </section>
 
@@ -335,6 +471,43 @@
         <div class="card-icon">💎</div>
         <h3>Fair Launch</h3>
         <p>No team allocation or pre-sale. Everyone buys at the same level on pump.fun.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Roadmap Section -->
+  <section class="container">
+    <h2 class="section-title">🗺️ Project Roadmap</h2>
+    <div class="grid">
+      <div class="card">
+        <span class="roadmap-badge">Phase 1</span>
+        <h3>Launch & Heat</h3>
+        <ul class="roadmap-list">
+          <li>Fair Launch on pump.fun</li>
+          <li>Official Telegram & X Setup</li>
+          <li>Interactive Meme Studio</li>
+          <li>Telegram Buy-Bot Integration</li>
+        </ul>
+      </div>
+      <div class="card">
+        <span class="roadmap-badge">Phase 2</span>
+        <h3>Community & Spice</h3>
+        <ul class="roadmap-list">
+          <li>DEXScreener Profile Update</li>
+          <li>Extend interactive Meme Studio</li>
+          <li>Reach 1'000 Telegram Members</li>
+          <li>Community Meme Raids on X</li>
+        </ul>
+      </div>
+      <div class="card">
+        <span class="roadmap-badge">Phase 3</span>
+        <h3>Graduation & Beyond</h3>
+        <ul class="roadmap-list">
+          <li>100% Bonding Curve -> Raydium</li>
+          <li>CoinGecko & CMC Listings</li>
+          <li>Telegram Mini-App Clicker Game</li>
+          <li>Global Chili Takeover</li>
+        </ul>
       </div>
     </div>
   </section>
@@ -380,7 +553,7 @@
     <p style="font-size: 0.8rem; opacity: 0.6;">Disclaimer: $CHILIBURNER is a meme coin created for entertainment purposes only with no intrinsic value or expectation of financial return.</p>
   </footer>
 
-  <!-- Script for Copying Contract Address -->
+  <!-- Scripts -->
   <script>
     function copyCA() {
       const caText = document.getElementById("contractAddress").innerText;
@@ -394,6 +567,107 @@
         setTimeout(() => { btn.innerText = "Copy"; }, 2000);
       });
     }
+
+    // Meme Studio Logic (Canvas)
+    const canvas = document.getElementById('memeCanvas');
+    const ctx = canvas.getContext('2d');
+    
+    const imageUpload = document.getElementById('imageUpload');
+    const overlaySelect = document.getElementById('overlaySelect');
+    const topTextInput = document.getElementById('topText');
+    const bottomTextInput = document.getElementById('bottomText');
+
+    let baseImage = new Image();
+    let isCustomImage = false;
+
+    // Default logo image
+    baseImage.src = 'img/logo.png';
+
+    baseImage.onload = drawMeme;
+    baseImage.onerror = drawMeme;
+
+    // Event Listeners
+    topTextInput.addEventListener('input', drawMeme);
+    bottomTextInput.addEventListener('input', drawMeme);
+    overlaySelect.addEventListener('change', drawMeme);
+
+    imageUpload.addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+          baseImage = new Image();
+          baseImage.onload = function() {
+            isCustomImage = true;
+            drawMeme();
+          };
+          baseImage.src = event.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    function drawMeme() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // 1. Draw Background Image
+      try {
+        ctx.drawImage(baseImage, 0, 0, canvas.width, canvas.height);
+      } catch(e) {
+        // Fallback if image fails to render
+        const grad = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+        grad.addColorStop(0, '#14141d');
+        grad.addColorStop(1, '#ff2a00');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+      }
+
+      // 2. Draw Selected Overlay / Sticker
+      const selectedOverlay = overlaySelect.value;
+      if (selectedOverlay === 'flames') {
+        ctx.font = '90px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('🔥🔥🔥', canvas.width / 2, canvas.height / 2);
+      } else if (selectedOverlay === 'glasses') {
+        ctx.font = '100px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('🕶️', canvas.width / 2, canvas.height / 2 - 20);
+      } else if (selectedOverlay === 'logo' && isCustomImage) {
+        // Draw small logo sticker in corner if custom image is loaded
+        ctx.font = '50px sans-serif';
+        ctx.fillText('🌶️', canvas.width - 50, 50);
+      }
+
+      // 3. Draw Text
+      ctx.fillStyle = '#ffffff';
+      ctx.strokeStyle = '#000000';
+      ctx.lineWidth = 6;
+      ctx.font = '900 36px Impact, sans-serif';
+      ctx.textAlign = 'center';
+
+      // Top Text
+      const topText = topTextInput.value.toUpperCase();
+      ctx.textBaseline = 'top';
+      ctx.strokeText(topText, canvas.width / 2, 20);
+      ctx.fillText(topText, canvas.width / 2, 20);
+
+      // Bottom Text
+      const bottomText = bottomTextInput.value.toUpperCase();
+      ctx.textBaseline = 'bottom';
+      ctx.strokeText(bottomText, canvas.width / 2, canvas.height - 20);
+      ctx.fillText(bottomText, canvas.width / 2, canvas.height - 20);
+    }
+
+    function downloadMeme() {
+      const link = document.createElement('a');
+      link.download = 'chiliburner-meme.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    }
+
+    drawMeme();
   </script>
 
 </body>
