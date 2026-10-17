@@ -357,6 +357,10 @@
       font-size: 0.8rem;
     }
 
+    .roadmap-list li.completed::before {
+      content: "✅";
+    }
+
     .steps {
       display: flex;
       flex-direction: column;
@@ -410,7 +414,7 @@
     <div class="logo">
       🌶️ <span class="logo-text">ChiliBurner</span>
     </div>
-    <a href="https://pump.fun" target="_blank" class="btn-buy">Buy on pump.fun 🚀</a>
+    <a href="https://pump.fun/coin/EMWkva5vPMswmURCX4BHDMeTmnzkKot6RP4nxj8kpump" target="_blank" class="btn-buy">Buy on pump.fun 🚀</a>
   </header>
 
   <!-- Hero Section -->
@@ -424,7 +428,7 @@
     <!-- Contract Address -->
     <div class="ca-container">
       <span class="ca-title">Contract Address (CA):</span>
-      <span class="ca-address" id="contractAddress">YOUR_SOLANA_CONTRACT_ADDRESS_HERE</span>
+      <span class="ca-address" id="contractAddress">EMWkva5vPMswmURCX4BHDMeTmnzkKot6RP4nxj8kpump</span>
       <button class="btn-copy" onclick="copyCA()">Copy</button>
     </div>
   </section>
@@ -510,9 +514,10 @@
         <span class="roadmap-badge">Phase 1</span>
         <h3>Launch & Heat</h3>
         <ul class="roadmap-list">
-          <li>Fair Launch on pump.fun</li>
-          <li>Official Telegram & X Setup</li>
-          <li>Interactive Meme Studio</li>
+          <li class="completed">Fair Launch on pump.fun</li>
+          <li class="completed">Official X Setup</li>
+          <li class="completed">Interactive Meme Studio</li>
+          <li>Official Telegram Setup</li>
           <li>Telegram Buy-Bot Integration</li>
         </ul>
       </div>
@@ -584,8 +589,8 @@
   <script>
     function copyCA() {
       const caText = document.getElementById("contractAddress").innerText;
-      if (caText === "YOUR_SOLANA_CONTRACT_ADDRESS_HERE") {
-        alert("Contract address not set yet! Paste your real CA here after launching on pump.fun.");
+      if (!caText || caText.includes("YOUR_SOLANA")) {
+        alert("Contract address not set yet!");
         return;
       }
       navigator.clipboard.writeText(caText).then(() => {
