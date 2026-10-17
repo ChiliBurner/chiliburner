@@ -197,7 +197,7 @@
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
       gap: 25px;
     }
 
@@ -221,13 +221,14 @@
     }
 
     .card h3 {
-      font-size: 1.4rem;
+      font-size: 1.3rem;
       margin-bottom: 10px;
       color: var(--primary-orange);
     }
 
     .card p {
       color: var(--text-muted);
+      font-size: 0.95rem;
     }
 
     /* Meme Generator Upgrade CSS */
@@ -257,6 +258,19 @@
       border-radius: 16px;
       box-shadow: 0 0 20px rgba(0,0,0,0.6);
       background: #000;
+      cursor: grab;
+      touch-action: none;
+    }
+
+    #memeCanvas:active {
+      cursor: grabbing;
+    }
+
+    .canvas-hint {
+      font-size: 0.8rem;
+      color: var(--primary-orange);
+      margin-top: 8px;
+      font-weight: 600;
     }
 
     .controls-container {
@@ -282,7 +296,8 @@
 
     .control-group input[type="text"],
     .control-group input[type="file"],
-    .control-group select {
+    .control-group select,
+    .control-group input[type="range"] {
       background: #1c1c28;
       border: 1px solid #333348;
       color: #fff;
@@ -420,6 +435,7 @@
     <div class="generator-box">
       <div class="canvas-container">
         <canvas id="memeCanvas" width="500" height="500"></canvas>
+        <p class="canvas-hint">💡 Drag & move the sticker anywhere on the image!</p>
       </div>
       <div class="controls-container">
         
@@ -429,22 +445,28 @@
         </div>
 
         <div class="control-group">
-          <label for="overlaySelect">2. Select Overlay / Sticker</label>
+          <label for="overlaySelect">2. Select PNG Sticker</label>
           <select id="overlaySelect">
-            <option value="logo">Chili Mascot Logo</option>
-            <option value="flames">Fire & Flames</option>
-            <option value="glasses">Sunglasses</option>
+            <option value="mascot">👹 Mascot</option>
+            <option value="fire">🔥 Fire</option>
+            <option value="chili">🌶️ Spicy Chili</option>
+            <option value="logo">🖼️ Full Logo</option>
             <option value="none">None (Text Only)</option>
           </select>
         </div>
 
         <div class="control-group">
-          <label for="topText">3. Top Text</label>
+          <label for="stickerSize">3. Sticker Size</label>
+          <input type="range" id="stickerSize" min="40" max="350" value="150">
+        </div>
+
+        <div class="control-group">
+          <label for="topText">4. Top Text</label>
           <input type="text" id="topText" placeholder="TOO HOT TO HOLD" value="TOO HOT TO HOLD">
         </div>
 
         <div class="control-group">
-          <label for="bottomText">4. Bottom Text</label>
+          <label for="bottomText">5. Bottom Text</label>
           <input type="text" id="bottomText" placeholder="BUY $CHILIBURNER" value="BUY $CHILIBURNER">
         </div>
 
@@ -460,7 +482,7 @@
       <div class="card">
         <div class="card-icon">🔥</div>
         <h3>Liquidity Burned</h3>
-        <p>100% of initial LP tokens are burned forever. Rug-proof by default.</p>
+        <p>100% of initial LP tokens are burned forever upon Raydium graduation.</p>
       </div>
       <div class="card">
         <div class="card-icon">🚫</div>
@@ -470,7 +492,12 @@
       <div class="card">
         <div class="card-icon">💎</div>
         <h3>Fair Launch</h3>
-        <p>No team allocation or pre-sale. Everyone buys at the same level on pump.fun.</p>
+        <p>No presale or unfair team allocation. Everyone buys at the same level on pump.fun.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🛡️</div>
+        <h3>100% Transparency</h3>
+        <p>Dev holding is capped at max 3% total supply at launch. No dumping, forever.</p>
       </div>
     </div>
   </section>
@@ -568,21 +595,44 @@
       });
     }
 
-    // Meme Studio Logic (Canvas)
+    // Dynamic PNG Meme Studio Logic
     const canvas = document.getElementById('memeCanvas');
     const ctx = canvas.getContext('2d');
     
     const imageUpload = document.getElementById('imageUpload');
     const overlaySelect = document.getElementById('overlaySelect');
+    const stickerSizeInput = document.getElementById('stickerSize');
     const topTextInput = document.getElementById('topText');
     const bottomTextInput = document.getElementById('bottomText');
 
     let baseImage = new Image();
     let isCustomImage = false;
 
-    // Default logo image
-    baseImage.src = 'img/logo.png';
+    // Load PNG Sticker Images from /meme/
+    const stickers = {
+      mascot: new Image(),
+      fire: new Image(),
+      chili: new Image(),
+      logo: new Image()
+    };
 
+    stickers.mascot.src = 'meme/mascot.png';
+    stickers.fire.src = 'meme/fire.png';
+    stickers.chili.src = 'meme/chili.png';
+    stickers.logo.src = 'meme/logo.png';
+
+    // Trigger redraw when stickers load
+    Object.values(stickers).forEach(img => {
+      img.onload = drawMeme;
+    });
+
+    // Sticker Position
+    let stickerX = 250;
+    let stickerY = 250;
+    let isDragging = false;
+
+    // Default background image
+    baseImage.src = 'img/logo.png';
     baseImage.onload = drawMeme;
     baseImage.onerror = drawMeme;
 
@@ -590,6 +640,7 @@
     topTextInput.addEventListener('input', drawMeme);
     bottomTextInput.addEventListener('input', drawMeme);
     overlaySelect.addEventListener('change', drawMeme);
+    stickerSizeInput.addEventListener('input', drawMeme);
 
     imageUpload.addEventListener('change', function(e) {
       const file = e.target.files[0];
@@ -607,6 +658,47 @@
       }
     });
 
+    // Mouse & Touch Dragging Logic
+    function getCoords(e) {
+      const rect = canvas.getBoundingClientRect();
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+      return {
+        x: (clientX - rect.left) * (canvas.width / rect.width),
+        y: (clientY - rect.top) * (canvas.height / rect.height)
+      };
+    }
+
+    function startDrag(e) {
+      isDragging = true;
+      const coords = getCoords(e);
+      stickerX = coords.x;
+      stickerY = coords.y;
+      drawMeme();
+    }
+
+    function moveDrag(e) {
+      if (!isDragging) return;
+      e.preventDefault();
+      const coords = getCoords(e);
+      stickerX = coords.x;
+      stickerY = coords.y;
+      drawMeme();
+    }
+
+    function stopDrag() {
+      isDragging = false;
+    }
+
+    canvas.addEventListener('mousedown', startDrag);
+    canvas.addEventListener('mousemove', moveDrag);
+    canvas.addEventListener('mouseup', stopDrag);
+    canvas.addEventListener('mouseleave', stopDrag);
+
+    canvas.addEventListener('touchstart', startDrag);
+    canvas.addEventListener('touchmove', moveDrag);
+    canvas.addEventListener('touchend', stopDrag);
+
     function drawMeme() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -614,7 +706,6 @@
       try {
         ctx.drawImage(baseImage, 0, 0, canvas.width, canvas.height);
       } catch(e) {
-        // Fallback if image fails to render
         const grad = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
         grad.addColorStop(0, '#14141d');
         grad.addColorStop(1, '#ff2a00');
@@ -622,22 +713,30 @@
         ctx.fillRect(0, 0, canvas.width, canvas.height);
       }
 
-      // 2. Draw Selected Overlay / Sticker
-      const selectedOverlay = overlaySelect.value;
-      if (selectedOverlay === 'flames') {
-        ctx.font = '90px sans-serif';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillText('🔥🔥🔥', canvas.width / 2, canvas.height / 2);
-      } else if (selectedOverlay === 'glasses') {
-        ctx.font = '100px sans-serif';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillText('🕶️', canvas.width / 2, canvas.height / 2 - 20);
-      } else if (selectedOverlay === 'logo' && isCustomImage) {
-        // Draw small logo sticker in corner if custom image is loaded
-        ctx.font = '50px sans-serif';
-        ctx.fillText('🌶️', canvas.width - 50, 50);
+      // 2. Draw Selected PNG Sticker at (stickerX, stickerY)
+      const selectedKey = overlaySelect.value;
+      const stickerSize = parseInt(stickerSizeInput.value, 10);
+
+      if (selectedKey !== 'none' && stickers[selectedKey]) {
+        const img = stickers[selectedKey];
+        if (img.complete && img.naturalWidth !== 0) {
+          ctx.drawImage(
+            img, 
+            stickerX - stickerSize / 2, 
+            stickerY - stickerSize / 2, 
+            stickerSize, 
+            stickerSize
+          );
+        } else {
+          // Fallback emoji if PNG is not yet uploaded to /meme/
+          ctx.font = `${stickerSize}px sans-serif`;
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          let emoji = '🌶️';
+          if (selectedKey === 'fire') emoji = '🔥';
+          if (selectedKey === 'mascot') emoji = '👹';
+          ctx.fillText(emoji, stickerX, stickerY);
+        }
       }
 
       // 3. Draw Text
